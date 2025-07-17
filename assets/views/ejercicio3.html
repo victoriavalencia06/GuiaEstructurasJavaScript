@@ -1,4 +1,6 @@
+<!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,6 +35,102 @@
             </div>
         </nav>
     </header>
-    
+    <!-- Contenido principal -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Ejercicio 3: Cálculo de Aumento Salarial</h2>
+        <div class="row justify-content-center">
+            <!-- Formulario -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow">
+                    <div class="card-header bg-dark text-white">Datos del Empleado</div>
+                    <div class="card-body">
+                        <form id="formAumento">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Salario actual ($):</label>
+                                <input type="number" class="form-control" id="salario" step="0.01" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Categoría:</label>
+                                <select class="form-select" id="categoria" required>
+                                    <option value="">Seleccione una categoría</option>
+                                    <option value="A">A - 15%</option>
+                                    <option value="B">B - 30%</option>
+                                    <option value="C">C - 10%</option>
+                                    <option value="D">D - 20%</option>
+                                </select>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-primary w-50" onclick="calcularAumento()">Calcular
+                                    Aumento</button>
+                                <button type="button" class="btn btn-secondary w-50"
+                                    onclick="limpiarFormulario()">Limpiar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultados -->
+            <div class="col-md-5">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">Resultados</div>
+                    <div class="card-body">
+                        <p><strong>Nombre:</strong> <span id="resNombre">-</span></p>
+                        <p><strong>Categoría:</strong> <span id="resCategoria">-</span></p>
+                        <p><strong>Salario Actual:</strong> $<span id="resSalario">-</span></p>
+                        <p><strong>Aumento:</strong> $<span id="resAumento">-</span></p>
+                        <p><strong>Nuevo Salario:</strong> $<span id="resNuevoSalario">-</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function calcularAumento() {
+            const nombre = document.getElementById("nombre").value.trim();
+            const salario = parseFloat(document.getElementById("salario").value);
+            const categoria = document.getElementById("categoria").value;
+
+            if (!nombre || isNaN(salario) || !categoria) {
+                alert("Por favor complete todos los campos correctamente.");
+                return;
+            }
+
+            let porcentaje;
+            switch (categoria) {
+                case 'A': porcentaje = 0.15; break;
+                case 'B': porcentaje = 0.30; break;
+                case 'C': porcentaje = 0.10; break;
+                case 'D': porcentaje = 0.20; break;
+                default: porcentaje = 0;
+            }
+
+            const aumento = salario * porcentaje;
+            const nuevoSalario = salario + aumento;
+
+            // Mostrar resultados
+            document.getElementById("resNombre").textContent = nombre;
+            document.getElementById("resCategoria").textContent = categoria;
+            document.getElementById("resSalario").textContent = salario.toFixed(2);
+            document.getElementById("resAumento").textContent = aumento.toFixed(2);
+            document.getElementById("resNuevoSalario").textContent = nuevoSalario.toFixed(2);
+        }
+
+        function limpiarFormulario() {
+            document.getElementById("formAumento").reset();
+            document.getElementById("resNombre").textContent = "-";
+            document.getElementById("resCategoria").textContent = "-";
+            document.getElementById("resSalario").textContent = "-";
+            document.getElementById("resAumento").textContent = "-";
+            document.getElementById("resNuevoSalario").textContent = "-";
+        }
+    </script>
 </body>
+
 </html>
