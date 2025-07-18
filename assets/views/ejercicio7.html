@@ -36,5 +36,104 @@
         </nav>
     </header>
 
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Columna izquierda: formulario -->
+            <div class="col-md-6">
+                <div class="card p-4 shadow">
+                    <h4 class="text-center mb-4">Ingrese 10 números enteros</h4>
+                    <form id="formNumeros">
+                        <div class="row">
+                            <!-- 10 Inputs en dos columnas -->
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 1">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 2">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 3">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 4">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 5">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 6">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 7">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 8">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 9">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <input type="number" class="form-control numero" placeholder="Número 10">
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="button" onclick="analizarNumeros()" class="btn btn-success w-50">Calcular</button>
+                            <button type="button" onclick="limpiarFormulario()" class="btn btn-secondary w-50">Limpiar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Columna derecha: resultados -->
+            <div class="col-md-6 mt-1 mb-2">
+                <div class="card p-4 shadow bg-light" id="resultadoCard" style="display: none;">
+                    <h5 class="text-center mb-3">Resultados</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">Cantidad de negativos: <span id="negativos"></span></li>
+                        <li class="list-group-item">Cantidad de positivos: <span id="positivos"></span></li>
+                        <li class="list-group-item">Cantidad múltiplos de 15: <span id="multiplos15"></span></li>
+                        <li class="list-group-item">Suma de pares: <span id="sumaPares"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function analizarNumeros() {
+            const inputs = document.querySelectorAll('.numero');
+            let negativos = 0, positivos = 0, multiplos15 = 0, sumaPares = 0;
+
+            inputs.forEach(input => {
+                const valor = parseInt(input.value);
+
+                if (isNaN(valor)) return;
+
+                if (valor < 0) negativos++;
+                if (valor > 0) positivos++;
+                if (valor % 15 === 0) multiplos15++;
+                if (valor % 2 === 0) sumaPares += valor;
+            });
+
+            document.getElementById('negativos').textContent = negativos;
+            document.getElementById('positivos').textContent = positivos;
+            document.getElementById('multiplos15').textContent = multiplos15;
+            document.getElementById('sumaPares').textContent = sumaPares;
+
+            document.getElementById('resultadoCard').style.display = 'block';
+        }
+
+        function limpiarFormulario() {
+            const inputs = document.querySelectorAll('.numero');
+            inputs.forEach(input => input.value = '');
+            document.getElementById('resultadoCard').style.display = 'none';
+        }
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

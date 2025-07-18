@@ -35,6 +35,110 @@
             </div>
         </nav>
     </header>
-    
+    <div class="container my-4">
+        <h2 class="mb-4 text-center">Calcula el descuento en tu viaje</h2>
+
+        <div class="row g-4">
+            <!-- Formulario -->
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Datos del Viaje</h4>
+                        <form id="formularioViaje">
+                            <div class="mb-3">
+                                <label for="origen" class="form-label">Ciudad de Origen:</label>
+                                <input type="text" id="origen" class="form-control" placeholder="Ej: Palma" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="destino" class="form-label">Destino:</label>
+                                <input type="text" id="destino" class="form-control" placeholder="Ej: Panchimalco"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="costo" class="form-label">Costo del Viaje ($):</label>
+                                <input type="number" id="costo" class="form-control" placeholder="Ej: 100" step="0.01"
+                                    required>
+                            </div>
+
+                            <div class="d-flex gap-2 mt-3">
+                                <button type="button" onclick="calcularDescuento()"
+                                    class="btn btn-primary w-50">Calcular</button>
+                                <button type="button" onclick="limpiarFormulario()"
+                                    class="btn btn-secondary w-50">Limpiar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultados -->
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Resultados</h5>
+                        <p><strong>Origen:</strong> <span id="resOrigen">-</span></p>
+                        <p><strong>Destino:</strong> <span id="resDestino">-</span></p>
+                        <p><strong>Descuento Aplicado:</strong> <span id="resDescuento">-</span></p>
+                        <p><strong>Total a Pagar:</strong> <span id="resTotal">-</span></p>
+                        <div id="resMensaje" class="alert alert-secondary mt-4">Complete el formulario y presione el
+                            botón.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calcularDescuento() {
+            const origen = document.getElementById("origen").value.trim().toLowerCase();
+            const destino = document.getElementById("destino").value.trim().toLowerCase();
+            const costo = parseFloat(document.getElementById("costo").value);
+
+            let descuento = 0;
+
+            if (origen === "palma" && destino === "la costa del sol") {
+                descuento = 0.05;
+            } else if (destino === "panchimalco") {
+                descuento = 0.10;
+            } else if (destino === "puerto el triunfo") {
+                descuento = 0.15;
+            }
+
+            const montoDescuento = costo * descuento;
+            const total = costo - montoDescuento;
+
+            // Mostrar resultados
+            document.getElementById("resOrigen").textContent = capitalizar(origen);
+            document.getElementById("resDestino").textContent = capitalizar(destino);
+            document.getElementById("resDescuento").textContent = (descuento * 100) + "%";
+            document.getElementById("resTotal").textContent = "$" + total.toFixed(2);
+
+            let mensaje = "Descuento aplicado correctamente.";
+            if (descuento === 0) {
+                mensaje = "No se aplica ningún descuento para este destino.";
+            }
+
+            document.getElementById("resMensaje").textContent = mensaje;
+            document.getElementById("resMensaje").className = "alert alert-info mt-4";
+        }
+
+        function capitalizar(texto) {
+            return texto
+                .split(" ")
+                .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+                .join(" ");
+        }
+
+        function limpiarFormulario() {
+            document.getElementById("formularioViaje").reset();
+            document.getElementById("resOrigen").textContent = "-";
+            document.getElementById("resDestino").textContent = "-";
+            document.getElementById("resDescuento").textContent = "-";
+            document.getElementById("resTotal").textContent = "-";
+            document.getElementById("resMensaje").textContent = "Complete el formulario y presione el botón.";
+            document.getElementById("resMensaje").className = "alert alert-secondary mt-4";
+        }
+    </script>
 </body>
+
 </html>
