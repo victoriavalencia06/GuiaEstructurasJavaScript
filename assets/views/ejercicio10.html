@@ -35,6 +35,120 @@
             </div>
         </nav>
     </header>
-    
+
+    <div class="container p-4">
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4">Promedio de Edades por Turno</h2>
+
+            <!-- Turno Mañana -->
+            <h5>Turno Mañana (5 estudiantes):</h5>
+            <div class="row mb-3" id="mananaInputs"></div>
+
+            <!-- Turno Tarde -->
+            <h5>Turno Tarde (6 estudiantes):</h5>
+            <div class="row mb-3" id="tardeInputs"></div>
+
+            <!-- Turno Noche -->
+            <h5>Turno Noche (11 estudiantes):</h5>
+            <div class="row mb-3" id="nocheInputs"></div>
+
+            <div class="d-flex gap-2 mt-2 mb-3">
+                <button onclick="calcularPromedios()" class="btn btn-primary w-50">Calcular</button>
+                <button onclick="limpiar()" class="btn btn-secondary w-50">Limpiar</button>
+            </div>
+
+            <div id="resultado" class="mt-4 alert d-none fs-5"></div>
+        </div>
+    </div>
+
+    <script>
+        const turnos = {
+            manana: 5,
+            tarde: 6,
+            noche: 11
+        };
+
+        function generarInputs() {
+            for (const turno in turnos) {
+                const container = document.getElementById(`${turno}Inputs`);
+                container.innerHTML = "";
+                for (let i = 0; i < turnos[turno]; i++) {
+                    const div = document.createElement("div");
+                    div.className = "col-md-2 mb-2";
+                    div.innerHTML = `<input type="number" class="form-control" placeholder="Edad ${i + 1}" id="${turno}_${i}">`;
+                    container.appendChild(div);
+                }
+            }
+        }
+
+        function obtenerEdades(turno, cantidad) {
+            const edades = [];
+            for (let i = 0; i < cantidad; i++) {
+                const valor = parseInt(document.getElementById(`${turno}_${i}`).value);
+                if (isNaN(valor) || valor <= 0) return null;
+                edades.push(valor);
+            }
+            return edades;
+        }
+
+        function calcularPromedios() {
+            const resultadoDiv = document.getElementById("resultado");
+            const edadesManana = obtenerEdades("manana", 5);
+            const edadesTarde = obtenerEdades("tarde", 6);
+            const edadesNoche = obtenerEdades("noche", 11);
+
+            if (!edadesManana || !edadesTarde || !edadesNoche) {
+                resultadoDiv.className = "alert alert-warning";
+                resultadoDiv.textContent = "Por favor completa todas las edades correctamente.";
+                resultadoDiv.classList.remove("d-none");
+                return;
+            }
+
+            const prom = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+            const promedioManana = prom(edadesManana);
+            const promedioTarde = prom(edadesTarde);
+            const promedioNoche = prom(edadesNoche);
+
+            let mayorTurno = "Mañana";
+            let mayorProm = promedioManana;
+
+            if (promedioTarde > mayorProm) {
+                mayorProm = promedioTarde;
+                mayorTurno = "Tarde";
+            }
+
+            if (promedioNoche > mayorProm) {
+                mayorProm = promedioNoche;
+                mayorTurno = "Noche";
+            }
+
+            resultadoDiv.className = "alert alert-success fs-5";
+            resultadoDiv.innerHTML = `
+        Promedio Mañana: ${promedioManana.toFixed(2)}<br>
+        Promedio Tarde: ${promedioTarde.toFixed(2)}<br>
+        Promedio Noche: ${promedioNoche.toFixed(2)}<br><br>
+        <strong>El turno con mayor promedio de edad es: ${mayorTurno}</strong>
+      `;
+            resultadoDiv.classList.remove("d-none");
+        }
+
+        function limpiar() {
+            for (const turno in turnos) {
+                for (let i = 0; i < turnos[turno]; i++) {
+                    const input = document.getElementById(`${turno}_${i}`);
+                    if (input) input.value = "";
+                }
+            }
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.className = "alert d-none";
+            resultadoDiv.textContent = "";
+        }
+
+        // Generar los campos al cargar la página
+        generarInputs();
+    </script>
+
 </body>
+
 </html>
