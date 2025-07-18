@@ -38,23 +38,23 @@
 
     <div class="container mt-5">
         <div class="row">
-            <!-- Columna izquierda: Formulario -->
+            <!-- Tabla de multiplicar (formulario) -->
             <div class="col-md-6">
                 <div class="card p-4 shadow">
                     <h4 class="text-center mb-4">Tabla de Multiplicar</h4>
                     <form id="formTabla">
                         <input type="number" id="numeroTabla" class="form-control mb-3" placeholder="Ingrese un número">
-                        <div class="d-flex justify-content-between">
-                            <button type="button" onclick="generarTabla()" class="btn btn-primary">Generar</button>
-                            <button type="button" onclick="limpiarTabla()" class="btn btn-secondary">Limpiar</button>
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="button" onclick="generarTabla()" class="btn btn-primary w-50">Generar</button>
+                            <button type="button" onclick="limpiarTabla()" class="btn btn-secondary w-50">Limpiar</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Columna derecha: Resultado -->
+            <!-- Resultado -->
             <div class="col-md-6">
-                <div class="card p-4 shadow bg-light" id="tablaResultado" style="display: none;">
+                <div class="card p-4 shadow bg-light mt-1 mb-2" id="tablaResultado" style="display: none;">
                     <h5 class="text-center mb-3">Resultado</h5>
                     <ul class="list-group" id="listaTabla"></ul>
                 </div>

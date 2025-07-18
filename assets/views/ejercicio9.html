@@ -36,5 +36,69 @@
         </nav>
     </header>
 
+    <div class="container p-4">
+        <div class="card shadow p-4 mx-auto" style="max-width: 500px;">
+            <h2 class="text-center mb-4">Conversor de Celsius a Fahrenheit</h2>
+
+            <div class="mb-3">
+                <label for="celsius" class="form-label">Temperatura en grados Celsius (°C):</label>
+                <input type="number" id="celsius" class="form-control" placeholder="Ej: 25" autofocus>
+            </div>
+
+            <div class="d-flex gap-2 mt-1 mb-3">
+                <button onclick="convertir()" class="btn btn-primary w-50">Convertir</button>
+                <button onclick="limpiar()" class="btn btn-secondary w-50">Limpiar</button>
+            </div>
+
+            <div id="resultado" class="alert d-none fs-5"></div>
+        </div>
+    </div>
+
+    <script>
+        function convertir() {
+            const celsius = parseFloat(document.getElementById("celsius").value);
+            const resultadoDiv = document.getElementById("resultado");
+
+            // Validación
+            if (isNaN(celsius)) {
+                alert("Por favor ingresa una temperatura válida en °C.");
+                return;
+            }
+
+            const fahrenheit = (celsius * 9 / 5) + 32;
+            let mensaje = "";
+            let clase = "";
+
+            if (fahrenheit >= 14 && fahrenheit < 32) {
+                mensaje = "Temperatura baja. Precaución, hace frío afuera. 🥶";
+                clase = "alert-primary";
+            } else if (fahrenheit >= 32 && fahrenheit < 68) {
+                mensaje = "Temperatura adecuada. Puedes disfrutar del día 😎";
+                clase = "alert-success";
+            } else if (fahrenheit >= 68 && fahrenheit <= 96) {
+                mensaje = "Temperatura alta. Precaución, hace muuucho calor 🥵";
+                clase = "alert-danger";
+            } else {
+                mensaje = "Temperatura desconocida.";
+                clase = "alert-warning";
+            }
+
+            // Mostrar resultado
+            resultadoDiv.className = `alert ${clase} fs-5`;
+            resultadoDiv.textContent = `Fahrenheit: ${fahrenheit.toFixed(2)} °F - ${mensaje}`;
+        }
+
+        function limpiar() {
+            document.getElementById("celsius").value = "";
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.className = "alert d-none";
+            resultadoDiv.textContent = "";
+            document.getElementById("celsius").focus();
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
