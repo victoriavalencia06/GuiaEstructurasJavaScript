@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,42 +35,54 @@
             </div>
         </nav>
     </header>
-    
-    <div class="container mt-5">
-        <h2 class="text-center mb-5">Tienda de Autos - Descuentos</h2>
 
-        <div class="mb-3">
-            <label for="coche" class="form-label">Selecciona un auto:</label>
-            <select id="coche" class="form-select" onchange="actualizarImagen()">
-                <option value="fiesta">Ford Fiesta</option>
-                <option value="focus">Ford Focus</option>
-                <option value="escape">Ford Escape</option>
-            </select>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow rounded">
+                    <div class="card-header bg-dark text-white text-center">
+                        <h4>Tienda de Autos - Descuentos</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="coche" class="form-label">Selecciona un auto:</label>
+                            <select id="coche" class="form-select" onchange="actualizarImagen()">
+                                <option value="fiesta">Ford Fiesta</option>
+                                <option value="focus">Ford Focus</option>
+                                <option value="escape">Ford Escape</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="precio" class="form-label">Ingrese el precio del auto seleccionado ($):</label>
+                            <input type="number" id="precio" class="form-control" placeholder="Ej: 20000">
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button onclick="calcularPrecioFinal()" class="btn btn-primary">Calcular Descuento</button>
+                        </div>
+
+                        <div id="precioFinal" class="mt-4 text-success text-center fs-5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5 d-flex align-items-center justify-content-center mt-4 mt-md-0">
+                <img id="imagenCoche" src="" alt="Imagen del coche" class="img-fluid rounded shadow-sm"
+                    style="max-height: 250px;">
+            </div>
         </div>
-
-    <div class="mb-3">
-        <label for="precio" class="form-label">Ingrese el precio ($):</label>
-        <input type="number" id="precio" class="form-control" placeholder="Ej: 20000">
-    </div>
-    <button onclick="calcularPrecioFinal()" class="btn btn-primary">Calcular Descuento</button>
-
-    <div id="precioFinal" class="mt-5 fs-5 text-success"></div>
-    </div>
-    
-    <div class="text-center">
-        <img id="imagenCoche" src="" alt="Imagen del coche">
     </div>
 
-    
     <script>
-        function calcularPrecioFinal(){
+        function calcularPrecioFinal() {
             const coche = document.getElementById("coche").value;
             const precio = parseFloat(document.getElementById("precio").value);
 
             let descuento = 0;
             let nombreCoche = "";
 
-            switch(coche){
+            switch (coche) {
                 case "fiesta":
                     descuento = 0.05;
                     nombreCoche = "Ford Fiesta";
@@ -93,21 +106,21 @@
             const precioFinal = precio - montoDescuento;
 
             document.getElementById("precioFinal").innerHTML = `
-            <strong>Auto:</strong>${nombreCoche}<br>
-            <strong>Descuento aplicado:</strong>${montoDescuento}<br>
-            <strong>Precio final:</strong>${precioFinal.toFixed(2)}
+            <strong>Auto: </strong>${nombreCoche}<br>
+            <strong>Descuento aplicado: </strong>${montoDescuento}%<br>
+            <strong>Precio final: </strong>${precioFinal.toFixed(2)}
             `;
-
         }
 
-
-        function actualizarImagen(){
+        function actualizarImagen() {
             const imagen = document.getElementById("imagenCoche");
             const coche = document.getElementById("coche").value;
-            
+            const precio = document.getElementById("precio");
+            const resultado = document.getElementById("precioFinal");
+
             let url = "";
 
-            switch(coche){
+            switch (coche) {
                 case "fiesta":
                     url = "https://images.hgmsites.net/med/2016-ford-fiesta-4-door-sedan-se-angular-front-exterior-view_100514914_m.jpg";
                     break;
@@ -119,14 +132,18 @@
                     break;
                 default:
                     url = "https://external-preview.redd.it/gDvWGpie66fbsaBgdg3pOdQNks9E45h9nc2ReVJOI2o.jpg?auto=webp&s=fb5375d9c05c837ebdc8d7153cbf3b2af587b3d2";
-
             }
-            
-            imagen.src = url;        
+
+            imagen.src = url;
+
+            // Limpiar campo de precio y resultado
+            precio.value = "";
+            resultado.innerHTML = "";
         }
-        //primera imagen
         actualizarImagen();
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
